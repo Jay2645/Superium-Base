@@ -1,0 +1,13 @@
+/NOLOGO
+/errorReport:prompt
+/MACHINE:x64
+/SUBSYSTEM:WINDOWS
+/DEF
+/NAME:"UE4Editor-Superpowers.dll"
+/IGNORE:4221
+/NODEFAULTLIB
+"D:\Documents\Projects\Unreal\Superium\Intermediate\Build\Win64\SuperiumEditor\Development\Engine\SharedPCH.Engine.h.obj"
+"D:\Documents\Projects\Unreal\Superium\Plugins\Superpowers\Intermediate\Build\Win64\UE4Editor\Development\Superpowers\Module.Superpowers.cpp.obj"
+"D:\Documents\Projects\Unreal\Superium\Plugins\Superpowers\Intermediate\Build\Win64\UE4Editor\Development\Superpowers\Module.Superpowers.gen.cpp.obj"
+"D:\Documents\Projects\Unreal\Superium\Plugins\Superpowers\Intermediate\Build\Win64\UE4Editor\Development\Superpowers\PCLaunch.rc.res"
+/OUT:"D:\Documents\Projects\Unreal\Superium\Plugins\Superpowers\Intermediate\Build\Win64\UE4Editor\Development\Superpowers\UE4Editor-Superpowers.lib"
