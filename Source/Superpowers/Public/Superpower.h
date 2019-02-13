@@ -5,21 +5,55 @@
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
 #include "GameFramework/Character.h"
+#include "Internationalization.h"
 
 #include "Superpower.generated.h"
 
 
 class ISuperInterface;
 
+/**
+* Various UI data about this superpower.
+* This contains the superpower name, cost, etc.
+*/
+USTRUCT(BlueprintType)
+struct SUPERPOWERS_API FSuperpowerUIData
+{
+	GENERATED_BODY()
+
+public:
+	// The name given to this superpower -- "Super Jump", "X-Ray Vision", etc.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FText FriendlySuperpowerName;
+	// A description of the superpower.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	FText SuperpowerDescription;
+	// How much this power costs to "buy."
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	int32 PowerCost;
+
+	FSuperpowerUIData()
+	{
+		FriendlySuperpowerName = FText::FromString("Generic Superpower");
+		SuperpowerDescription = FText::FromString("This superpower doesn't do anything.");
+		PowerCost = 1;
+	}
+};
+
+/**
+* A base type for superpowers.
+* All superpowers should inherit from this class.
+*/
 UCLASS(Abstract, Blueprintable, Transient)
 class SUPERPOWERS_API USuperpower : public UActorComponent
 {
 	GENERATED_BODY()
 
-protected:
+protected:	
 	// A reference to the superhero who has this power.
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Super", meta = (AllowPrivateAccess = "true"))
 	TScriptInterface<ISuperInterface> Superhero;
+
 	// How often the superpower should tick when it's active.
 	// A value <= 0 means it will never tick (only activating once).
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Power", meta = (AllowPrivateAccess = "true"))
@@ -40,6 +74,11 @@ protected:
 
 	FTimerHandle PowerTickHandle;
 	FTimerHandle PowerCooldownHandle;
+
+public:
+	// All UI data about this superpower, including name, description, cost, etc.
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "UI")
+	FSuperpowerUIData UIData;
 
 public:
 	USuperpower();
@@ -86,3 +125,5 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Game|Character|Superhero|Powers")
 	bool IsEnabled() const;
 };
+
+#undef LOCTEXT_NAMESPACE

@@ -237,12 +237,13 @@ void FSuperpowersModule::FindBlueprintSubclasses(const TArray<FString>& ContentP
 	}
 }
 
-void FSuperpowersModule::StartupModule()
+void FSuperpowersModule::LoadPaks()
 {
-	TArray< FString > ContentPaths;
+	TArray<FString> ContentPaths;
 	RegisterPaks(ContentPaths);
 
 	UClass* Base = USuperpower::StaticClass();
+	AllSuperpowers.Empty();
 	FindCPPSubclasses(Base, AllSuperpowers);
 	FindBlueprintSubclasses(ContentPaths, Base, AllSuperpowers);
 
@@ -255,6 +256,14 @@ void FSuperpowersModule::StartupModule()
 		}
 		UE_LOG(LogTemp, Log, TEXT("Power: %s"), *subclass->GetName());
 	}
+}
+
+
+
+void FSuperpowersModule::StartupModule()
+{
+	// Load all Paks.
+	LoadPaks();
 }
 
 void FSuperpowersModule::ShutdownModule()
