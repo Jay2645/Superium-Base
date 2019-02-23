@@ -31,6 +31,7 @@ protected:
 	virtual USceneComponent* AddNewComponent_Implementation(TSubclassOf<USceneComponent> NewComponent, FTransform ComponentTransform, USceneComponent* AttachParent = NULL, FName AttachTo = NAME_None) = 0;
 	virtual USuperpower* AddSuperpower_Implementation(TSubclassOf<USuperpower> NewPower) = 0;
 	virtual void RemoveSuperpower_Implementation(int32 Index) = 0;
+	virtual USkeletalMeshComponent* GetVisibleMesh_Implementation() const = 0;
 
 	// Have default implementation
 	virtual int32 GetSuperpowerIndex_Implementation(TSubclassOf<USuperpower> Power) const;
@@ -72,6 +73,12 @@ public:
 	// Plays a sound coming from wherever the superhero is.
 	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Game|Character|Superhero")
 	void PlaySound(class USoundBase* PowerSound);
+	// Gets the mesh associated with this character.
+	// If the character being controlled is in first-person, this 
+	// should return the first-person mesh.
+	// If it's third-person, this should return the third-person mesh.
+	UFUNCTION(BlueprintCallable, BlueprintNativeEvent, Category = "Game|Character|Superhero")
+	USkeletalMeshComponent* GetVisibleMesh() const;
 
 	// Adds a component to this superhero.
 	// This can be useful when attaching meshes and the like.
